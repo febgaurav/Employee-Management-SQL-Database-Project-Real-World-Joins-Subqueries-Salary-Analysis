@@ -1,0 +1,9 @@
+SELECT
+E.employee_name,
+D.dept_name,
+S.salary
+FROM e_info AS E
+JOIN department AS D
+ON LOWER(E.Division) = LOWER(D.dept_name)
+JOIN salaries AS S
+ON E.employee_ID = S.employee_ID;
