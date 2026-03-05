@@ -1,0 +1,5 @@
+SELECT *
+FROM e_info
+INNER JOIN last_quater_bonus
+ON e_info.employee_ID = last_quater_bonus.employee_ID
+WHERE last_quater_bonus.bonus > 5000;
