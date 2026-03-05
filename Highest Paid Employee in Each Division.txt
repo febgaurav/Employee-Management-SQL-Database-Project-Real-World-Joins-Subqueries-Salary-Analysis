@@ -1,0 +1,11 @@
+SELECT employee_name, Division, salary AS highest_salary
+FROM e_info AS E
+JOIN salaries AS S
+ON E.employee_ID = S.employee_ID
+WHERE S.salary = (
+SELECT MAX(S2.salary)
+FROM e_info AS E2
+JOIN salaries AS S2
+ON E2.employee_ID = S2.employee_ID
+WHERE E2.Division = E.Division
+);
