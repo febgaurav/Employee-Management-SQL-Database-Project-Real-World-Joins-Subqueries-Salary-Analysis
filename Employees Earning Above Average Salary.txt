@@ -1,0 +1,8 @@
+SELECT *
+FROM e_info AS E
+JOIN salaries AS S
+ON E.employee_ID = S.employee_ID
+WHERE S.salary > (
+SELECT AVG(salary) FROM salaries
+)
+ORDER BY S.salary DESC;
