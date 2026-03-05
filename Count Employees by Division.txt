@@ -1,0 +1,4 @@
+SELECT Division, COUNT(*) AS emp_count
+FROM e_info
+GROUP BY Division
+HAVING emp_count > 1;
