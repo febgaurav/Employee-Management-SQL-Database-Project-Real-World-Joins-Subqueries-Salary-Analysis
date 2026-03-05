@@ -6,4 +6,5 @@ SELECT *
 FROM e_info AS E
 JOIN Department AS D
 ON E.division = D.dept_name
+
 WHERE division IN ("logistic", "HR");
