@@ -1,0 +1,117 @@
+CREATE database company;
+use company;
+
+create table e_info(
+    employee_ID INT Primary key,
+    Name Varchar(20),
+    Divison Varchar(30)
+);
+
+ALTER TABLE e_info
+CHANGE Name employee_name VARCHAR(25),
+CHANGE Divison Division VARCHAR(30)
+;
+
+INSERT into e_info VALUES
+(1, "julia", "HR"),
+(2, "Samantha", "tech"),
+(3, "richard", "HR"),
+(4, "ram", "operation"),
+(5, "tom", "Research"),
+(6, "Paul", "Operation"),
+(7, "bob", "admin"), 
+(8, "robert", "research"), 
+(9, "mani", "logistic"),
+(10, "Doug", "admin");
+
+
+CREATE TABLE Department(
+dept_id INT not null,
+dept_name VARCHAR (20)
+);
+
+INSERT INTO Department VALUES
+(101, "HR"),
+(102, "Admin"),
+(103, "Research"),
+(104, "logistic"),
+(105, "operation"),
+(106, "tech");
+
+select *
+FROM e_info AS E
+JOIN Department AS D
+ON E.division = D.dept_name
+WHERE division IN ("logistic", "HR")
+;
+
+CREATE TABLE salaries(
+employee_id INT NOT NULL,
+salary INT DEFAULT 25000
+);
+
+INSERT INTO salaries VALUES
+(1, 55000),
+(2, 65000),
+(3, 52699),
+(4, 80000),
+(5, 74000),
+(6, 30000),
+(8, 90000),
+(10, 50000);
+
+SELECT
+E.employee_name,
+D.dept_name,
+S.salary
+FROM e_info AS E
+JOIN department AS D
+ON LOWER(E.Division) = LOWER(D.dept_name)
+JOIN salaries as S
+ON E.employee_ID = S.employee_ID;
+
+SELECT *
+FROM e_info AS E
+JOIN salaries AS S
+ON E.employee_ID = S.employee_ID
+WHERE S.salary > (
+SELECT AVG(salary) from salaries
+)
+ORDER BY S.salary DESC;
+
+SELECT Division, COUNT(*) AS emp_count
+FROM e_info
+GROUP BY Division
+HAVING emp_count > 1
+;
+
+SELECT employee_name, Division, salary AS highest_salary
+FROM e_info AS E
+JOIN salaries AS S
+ON E.employee_ID = S.employee_ID
+WHERE S.salary = (
+SELECT MAX(S2.salary)
+FROM e_info AS E2
+JOIN salaries AS S2	
+ON E2.employee_ID = S2.employee_ID
+    WHERE E2.Division = E.Division
+)
+
+
+CREATE table last_quater_bonus(
+    employee_ID int,
+    Bonus INT Not Null
+);
+
+INSERT into last_quater_bonus VALUES
+(1, 2000),
+(2, 5500),
+(3, 6240);
+
+select *
+From e_info
+inner Join last_quater_bonus
+On e_info.employee_ID = last_quater_bonus.employee_ID
+
+Where last_quater_bonus.bonus > 5000;
+
